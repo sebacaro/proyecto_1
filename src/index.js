@@ -8,27 +8,34 @@ function createTable(responseData){
 
     //comienzo prueba
 
+    //identifico lo que necesito
     const tableRow = document.querySelector('table thead tr');
     const tableColumn = '<th>Currency</th><th>15m</th><th>Last</th><th>Buy</th><th>Sell</th><th>Symbol</th>';
 
+    //inserto la data de tableColumn al tableRow
     tableRow.innerHTML = tableColumn;
 
+    //en tableBody busco con un metodo a table y tbody y creo una variable tabledataHtml para concatenar el resto de la información
     const tableBody = document.querySelector('table tbody');
     let tabledataHtml = '';
 
-    const currencyNames =  Object.keys(tableData);
+    //se crea una constante en donde se le pasa un metodo que busque todo los objetos en tableData
+    const currencyNames = Object.keys(tableData);
 
     //console.log(currencyNames);
 
       //['USD', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'DKK', 'EUR', 'GBP', 'HKD', 'INR', 'ISK', 'JPY', 'KRW', 'NZD', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TWD']
 
+    //se crea el for en donde i es = a 0  y si es mayor que currencyNames (constante creada para llamar la tableData, le asignamos la propiedad length, luego le decimos que el ciclo sea incremental)
     for(let i = 0; i < currencyNames.length; i++ ){
 
+      // creamos una constante que se llama currencyName para asiganrle la variable de arriva currencyNames con [i] variable entre parentesis
       const currencyName = currencyNames[i]
 
+      // se arma la tabla partiendo por la tabla general se le suma y continua += se crea la fila concatenada
       tabledataHtml += '<tr><td>' + currencyName + '</td>';
-      tabledataHtml += '<td>' + tableData[currencyName]['15m'] + '</td>';
-      tabledataHtml += '<td>' + tableData[currencyName].buy + '</td>';
+      tabledataHtml += '<td>' + tableData[currencyName]['15m'] + '</td>';// el 15 es porque es un number y no un string
+      tabledataHtml += '<td>' + tableData[currencyName].buy + '</td>'; // continua por punto porque el objeto llega hasta ahí
       tabledataHtml += '<td>' + tableData[currencyName].last + '</td>';
       tabledataHtml += '<td>' + tableData[currencyName].sell + '</td>';
       tabledataHtml += '<td>' + tableData[currencyName].symbol + '</td></tr>';
@@ -42,7 +49,6 @@ function createTable(responseData){
 
 
     //fin prueba
-
 
 
     //Parte 1 Tarea
