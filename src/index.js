@@ -1,6 +1,19 @@
 import 'whatwg-fetch';
 import { ApiRequest } from './dataRequest';
 
+function createRow(currencyName, data) { //usando "template string"
+  return `
+    <tr>
+      <td>${currencyName}</td>
+      <td>${data['15m']}</td>
+      <td>${data.buy}</td>
+      <td>${data.last}</td>
+      <td>${data.sell}</td>
+      <td>${data.symbol}</td>
+    </tr>
+  `;
+}
+
 function createTable(responseData){
     const tableData = JSON.parse(responseData);
 
@@ -11,6 +24,27 @@ function createTable(responseData){
     //identifico lo que necesito
     const tableRow = document.querySelector('table thead tr');
     const tableColumn = '<th>Currency</th><th>15m</th><th>Last</th><th>Buy</th><th>Sell</th><th>Symbol</th>';
+    const searchForm = document.querySelector('#search-form');
+
+    searchForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const searchInput = event.target.querySelector('input');
+      console.log(searchInput.value);
+      //tarea: con este texto tengo que acceder a la tabla. Crear una función que sea capaz de buscar el contenido en la tabla y solo buscar la info en la columna de currency en el primer td.
+      //tips: un buen selector para encontrar las columnas seria tr td:nth-child(1)
+      //utilizar querySelectorAll para que me encuentre todo
+      //al string del texto se le puede aplicar la función .toUpperCase()
+      //tengo que buscar todo el tr
+      // evalucación: deviolver el tr donde esta el texto buscado y si no se encuentra el texto imprimir "texto no encontrado"
+      //tengo que uar for comparar el valor e imprimir en consola
+      //cuando ocupe querySelectorAll luego tengo que ocupar .parentElement
+
+    });
+
+
+
+
+
 
     //inserto la data de tableColumn al tableRow
     tableRow.innerHTML = tableColumn;
@@ -33,12 +67,8 @@ function createTable(responseData){
       const currencyName = currencyNames[i]
 
       // se arma la tabla partiendo por la tabla general se le suma y continua += se crea la fila concatenada
-      tabledataHtml += '<tr><td>' + currencyName + '</td>';
-      tabledataHtml += '<td>' + tableData[currencyName]['15m'] + '</td>';// el 15 es porque es un number y no un string
-      tabledataHtml += '<td>' + tableData[currencyName].buy + '</td>'; // continua por punto porque el objeto llega hasta ahí
-      tabledataHtml += '<td>' + tableData[currencyName].last + '</td>';
-      tabledataHtml += '<td>' + tableData[currencyName].sell + '</td>';
-      tabledataHtml += '<td>' + tableData[currencyName].symbol + '</td></tr>';
+      // llamado a la función
+      tabledataHtml += createRow(currencyName, tableData[currencyName]);
 
     }
 
