@@ -13,11 +13,11 @@ stages:
     if: branch = master
 jobs:
   include:
-    - stage: build 
+    - stage: build
       script: npm run build
     - stage: functional-test
       script: npm start & (wait-on http://localhost:3000 && cypress run)
-    - stage: deploy 
+    - stage: deploy
       script: ./ci/deploy
       deploy: &heroku
         provider: heroku
