@@ -3,7 +3,7 @@ Feature: Home
 
   Scenario: Open Home page
     Given I open Home page
-    Then I see "Proyecto 1" in the title
+    Then I see the title based on the title and author information from package.json
   
   Scenario: Create table header with mandatory column names
     Given I open Home page
