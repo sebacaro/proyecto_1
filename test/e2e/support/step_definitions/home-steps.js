@@ -23,7 +23,7 @@ const btcTickerResponse = {
   }
 };
 const currencyNamesList = Object.keys(btcTickerResponse);
-const currencyNameSample = currencyNamesList[0];
+const currencyNameSample = currencyNamesList[1];
 const currencyTypeFormatter = name => `${name[0].toUpperCase()}${name.slice(1)}`;
 const currencyTypesList = Object.keys(btcTickerResponse[currencyNameSample]);
 const expectedColumnNames = [
@@ -35,6 +35,10 @@ given('I open Home page', () => {
   cy.server();
   cy.route('https://blockchain.info/es/ticker', btcTickerResponse);
   cy.visit(url);
+});
+
+when(`select the {string} currency in the currency selector`, currencySelected => {
+  cy.get('.home__select--currency').select(currencySelected);
 });
 
 then(`I see Currency, 15m, Last, Sell and Buy column names on the table`, () => {
@@ -69,6 +73,25 @@ then(`I see the currency selector with the currencies given in the data requeste
     const selectBoxElement = $select[0];
     const optionElements = Array.from(selectBoxElement.querySelectorAll('option'));
     
-    optionElements.forEach(optionEl => expect(currencyNamesList).to.include(optionEl.textContent));
+    expect(optionElements[0].textContent).to.eq('TODOS');
+    
+    optionElements.slice(1).forEach(optionEl => {
+      expect(currencyNamesList).to.include(optionEl.textContent);
+      expect(currencyNamesList).to.include(optionEl.getAttribute('value'));
+    });
   });
+});
+
+then(`I see the right row {string} with the class in the table`, currencySelected => {
+  cy.get('.row__currency--selected td:nth-child(1)')
+    .should($row => expect($row[0].textContent).to.eq(currencySelected));
+});
+
+then(`I see that the class is not applied to neither row`, () => {
+  const rowSelectedClass = 'row__currency--selected';
+  cy.get('table tbody')
+    .should($tBody => {
+      Array.from($tBody[0].querySelectorAll('tr'))
+        .forEach(row => expect(row.classList.contains(rowSelectedClass)).to.be.false)
+    });
 });
