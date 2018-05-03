@@ -27,7 +27,10 @@ La aplicación posee una funcionalidad ya desarrollada que utiliza la siguiente 
 
  ```
     ...
-    "author": "nombre apellido <email>",
+    "author": {
+        "name": "nombre apellido",
+        "email": "email"
+    },
     ...
     "config": {
         "title": "titulo del sitio web"

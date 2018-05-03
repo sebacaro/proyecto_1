@@ -1,18 +1,18 @@
 {
   "name": "frontend-project-1",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": {
     "name": "",
     "email": ""
+  },
+  "config": {
+     "title": ""
   },
   "scripts": {
     "start": "webpack-dev-server --hot",
     "dev": "npm start -- --watch",
     "build": "webpack",
     "test:e2e": "cypress open"
-  },
-  "config": {
-    "title": ""
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
