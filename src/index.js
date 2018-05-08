@@ -16,7 +16,38 @@ function createRow(currencyName, data) { //usando "template string"
 }
 
 function creatOption(currencyName) {
-  return `<option>${currencyName}</option>`
+  return `<option value="${currencyName}">${currencyName}</option>`
+}
+
+// función que pinta la row
+
+function onChange(event) {
+  const select = event.target;
+  const selectedIndex = select.selectedIndex;
+  const optionSelected = select.options[selectedIndex];
+  const currencyNameSelected = optionSelected.getAttribute('value');
+  const tableRows = document.querySelectorAll('table tbody tr');
+
+  for(let i = 0; i < tableRows.length; i++ ) {
+
+    const actualRow =  tableRows[i];
+    const currencyName = actualRow.querySelector('td').textContent;
+    //const rowCurrencySelect = actualRow.classList.contains('.row__currency--selected');
+
+    // actualRow.classList.contains
+    // actualRow.classList.add
+    // actualRow.classList.remove
+
+    if (currencyName === currencyNameSelected) {
+      actualRow.classList.add('row__currency--selected');
+    }
+
+    else if (actualRow.classList.contains('row__currency--selected')) {
+      actualRow.classList.remove('row__currency--selected');
+    }
+
+  }
+
 }
 
 function createTable(responseData){
@@ -39,7 +70,7 @@ function createTable(responseData){
     let tabledataHtml = '';
 
     const select = document.querySelector('.home__select--currency');
-    let optionHtml = '';
+    let optionHtml = '<option>TODOS</option>';
 
 
 
@@ -66,10 +97,12 @@ function createTable(responseData){
     }
 
     select.innerHTML = optionHtml;
-    
+
     tableBody.innerHTML = tabledataHtml;
 
+    //Vamos a escuchar el evento "change" del select
 
+    select.addEventListener('change', onChange);
 
     }
 
