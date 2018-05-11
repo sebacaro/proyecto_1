@@ -38,12 +38,14 @@ function onChange(event) {
     // actualRow.classList.add
     // actualRow.classList.remove
 
+    const selectClass = 'row__currency--selected';
+
     if (currencyName === currencyNameSelected) {
-      actualRow.classList.add('row__currency--selected');
+      actualRow.classList.add(selectClass);
     }
 
-    else if (actualRow.classList.contains('row__currency--selected')) {
-      actualRow.classList.remove('row__currency--selected');
+    else if (actualRow.classList.contains(selectClass)) {
+      actualRow.classList.remove(selectClass);
     }
 
   }
